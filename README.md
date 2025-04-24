@@ -1,71 +1,141 @@
+# 🎬 Movie Recommendation System
 
-# Movie Recommendation System - Content-Based Filtering
+Sistem rekomendasi film berbasis konten menggunakan dataset IMDb yang berisi informasi genre, deskripsi, dan rating film. Proyek ini dirancang untuk membantu pengguna menemukan film yang sesuai dengan preferensinya melalui analisis kesamaan konten.
 
-## Deskripsi Proyek
-Proyek ini bertujuan untuk membuat sistem rekomendasi film menggunakan pendekatan Content-Based Filtering. Sistem ini memanfaatkan metadata film seperti judul, genre, dan rating untuk memberikan rekomendasi film yang mirip berdasarkan konten film tersebut.
+---
 
-## Struktur Data
-Data film diambil dari berbagai genre film yang tersedia di GitHub. Setiap file CSV berisi data mengenai film dengan kolom-kolom seperti:
-- **name**: Judul film
-- **year**: Tahun rilis
-- **rating**: Rating film
-- **num_raters**: Jumlah rating
-- **num_reviews**: Jumlah ulasan
-- **genres**: Genre film (beberapa genre dapat dipisahkan dengan tanda semicolon)
+## 📝 Project Overview
 
-## Langkah-langkah
-1. **Impor Paket dan Library**:
-   - Menggunakan berbagai pustaka seperti Pandas, NumPy, Scikit-learn, dan Matplotlib untuk analisis data, preprocessing, dan visualisasi.
-   
-2. **Pemuatan dan Penggabungan Data**:
-   - Data film diambil dari repositori GitHub yang menyimpan berbagai genre film dan digabungkan menjadi satu dataset.
+Dalam era digital, platform streaming menyediakan ribuan judul film, menjadikan proses pencarian tontonan yang sesuai menjadi tantangan. Sistem rekomendasi muncul sebagai solusi untuk menyaring dan menyarankan film yang relevan bagi pengguna.
 
-3. **Pemahaman Data**:
-   - Data dieksplorasi untuk mengecek informasi dasar seperti ukuran dataset, tipe data, dan missing values.
-   - Outlier dan korelasi antara fitur numerik juga diperiksa.
+Menurut *Statista (2023)*, lebih dari 70% pengguna platform streaming bergantung pada rekomendasi otomatis untuk menemukan konten baru. Dengan demikian, sistem rekomendasi yang baik dapat meningkatkan kepuasan pengguna dan durasi menonton. Proyek ini berfokus pada pengembangan sistem rekomendasi berbasis konten (content-based filtering), yang memanfaatkan deskripsi dan genre film untuk memberikan saran yang dipersonalisasi.
 
-4. **Persiapan Data**:
-   - Duplikasi data dihapus, dan kolom-kolom yang tidak relevan (seperti tanggal rilis dan URL ulasan) dihapus.
-   - Kolom genre di-encode menggunakan OneHotEncoder untuk mengubah genre menjadi format yang dapat diproses oleh model.
+---
 
-5. **Ekstraksi Fitur dengan TF-IDF**:
-   - Fitur film diekstrak dari kombinasi kolom 'title', 'genres', dan 'rating'. 
-   - TF-IDF (Term Frequency-Inverse Document Frequency) digunakan untuk mewakili konten film dalam bentuk matriks numerik.
+## 💼 Business Understanding
 
-6. **Bangun Model**:
-   - Sistem rekomendasi dibangun menggunakan teknik Content-Based Filtering berdasarkan kemiripan konten film. Cosine similarity digunakan untuk mengukur kesamaan antara film berdasarkan fitur yang diekstrak.
+### 🔍 Problem Statement
 
-7. **Inferensi Model**:
-   - Fungsi `recommend_movies` digunakan untuk memberikan rekomendasi film berdasarkan judul film yang diberikan.
+- Bagaimana cara memberikan rekomendasi film yang relevan berdasarkan kemiripan konten film seperti genre dan sinopsis?
 
-## Penggunaan
-Untuk memberikan rekomendasi film berdasarkan judul, Anda dapat menggunakan fungsi `recommend_movies`. Contoh:
+### 🎯 Goals
+
+- Mengembangkan sistem rekomendasi berbasis konten yang dapat menyarankan film serupa berdasarkan genre dan deskripsi sinopsis.
+- Memberikan rekomendasi top-N film yang paling relevan bagi pengguna.
+
+### 🛠️ Solution Approach
+
+- **Content-Based Filtering**  
+  Sistem membandingkan fitur konten film seperti `genres` dan `sinopsis` menggunakan teknik TF-IDF (Term Frequency–Inverse Document Frequency) dan Cosine Similarity untuk mengukur tingkat kesamaan antarfilm. Film dengan nilai kesamaan tertinggi kemudian direkomendasikan kepada pengguna.
+
+---
+
+## 📊 Data Understanding
+
+### 📥 Sumber Data
+
+Dataset diambil dari:  
+🔗 [IMDb Movie Dataset - GitHub](https://github.com/Rahmathidayat4299/dataset-movie-recomendation)
+
+### 📐 Informasi Data
+
+- Jumlah data: **1400 entri**
+- Format: CSV
+- Fitur:
+  - `name`: Judul film
+  - `year`: Tahun rilis
+  - `movie_rated`: Kategori usia (misal: PG-13, R)
+  - `run_length`: Durasi film
+  - `genres`: Genre film
+  - `release_date`: Tanggal rilis
+  - `rating`: Skor rating pengguna
+  - `description`: Sinopsis atau deskripsi film
+  - `actors`: Aktor yang membintangi
+  - `directors`: Sutradara
+
+### 📈 Visualisasi Data
+
+Beberapa visualisasi eksploratif digunakan untuk memahami distribusi dan hubungan antarfitur:
+
+#### 🎞️ Distribusi Genre
 
 ```python
-recommend_movies("Inception")
+# Visualisasi genre terbanyak
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+genre_counts = df['genres'].value_counts().head(10)
+sns.barplot(x=genre_counts.values, y=genre_counts.index)
+plt.title("Top 10 Genre Paling Umum")
+plt.xlabel("Jumlah Film")
+plt.ylabel("Genre")
+plt.show()
 ```
 
-Ini akan mengembalikan daftar film yang serupa dengan "Inception".
+#### ⭐ Distribusi Rating
 
-## Instalasi dan Persyaratan
-Pastikan Anda menginstal pustaka berikut sebelum menjalankan kode:
-- `numpy`
-- `pandas`
-- `scikit-learn`
-- `matplotlib`
-- `seaborn`
-
-Anda dapat menginstalnya menggunakan pip:
-
-```
-pip install numpy pandas scikit-learn matplotlib seaborn
+```python
+sns.histplot(df['rating'], bins=10, kde=True)
+plt.title("Distribusi Rating Film")
+plt.xlabel("Rating")
+plt.ylabel("Jumlah Film")
+plt.show()
 ```
 
-## Penyimpanan dan Pengolahan Data
-Data yang digunakan dalam proyek ini tersedia di GitHub dan akan diunduh secara otomatis ke dalam DataFrame pandas. Anda juga dapat menyimpan data gabungan ini dalam file CSV untuk penggunaan lebih lanjut.
+---
 
-## Kontribusi
-Jika Anda memiliki saran atau ingin berkontribusi pada proyek ini, silakan ajukan pull request atau hubungi saya.
+## 🧹 Data Preparation
 
-## Lisensi
-Proyek ini dilisensikan di bawah [Lisensi MIT](https://opensource.org/licenses/MIT).
+- **Text Cleaning**: Membersihkan deskripsi dari tanda baca, angka, dan kata tidak penting (stopwords).
+- **TF-IDF Vectorization**: Mengubah teks deskripsi menjadi vektor numerik.
+- **Feature Engineering**: Menggabungkan kolom genre dan nama menjadi satu fitur gabungan.
+- **Normalisasi**: Menyesuaikan format data (misal: lowercase, strip whitespace).
+
+📌 Proses ini penting untuk memastikan data dalam format yang sesuai agar algoritma rekomendasi dapat berjalan secara optimal.
+
+---
+
+## 🤖 Modeling and Result
+
+### 🔍 Pendekatan
+
+Menggunakan algoritma **TF-IDF + Cosine Similarity** untuk menghitung kesamaan antar film berdasarkan konten mereka. Model akan merekomendasikan film yang paling mirip dengan film pilihan pengguna.
+
+### ✅ Hasil Rekomendasi (Top-5)
+
+Contoh output sistem:
+
+```
+Film input: Avatar
+
+Top 5 rekomendasi:
+1. Thor
+2. Fantastic Four
+3. The Mummy
+4. Aquaman
+5. Warcraft
+
+
+### 📌 Kelebihan & Kekurangan
+
+| Aspek | Penjelasan |
+|-------|------------|
+| ✅ Kelebihan | Tidak membutuhkan interaksi pengguna lain, cepat digunakan pada dataset kecil |
+| ❌ Kekurangan | Tidak bisa menyarankan film baru yang berbeda dari histori pengguna, terbatas pada informasi konten |
+
+---
+
+## 📏 Evaluation
+
+### 📐 Metrik Evaluasi
+
+- **Cosine Similarity Score**: Ukuran kesamaan antara film input dan rekomendasi.
+- **Precision@K** (jika ada ground truth pengguna): Mengukur seberapa relevan top-K rekomendasi.
+
+### 🧮 Rumus Cosine Similarity:
+
+\[
+\text{cosine\_similarity}(A, B) = \frac{A \cdot B}{\|A\|\|B\|}
+\]
+
+Model dievaluasi secara kualitatif dengan melihat relevansi hasil terhadap film input.
