@@ -135,19 +135,12 @@ Top 5 rekomendasi:
 
 ### 🧮 Rumus Cosine Similarity:
 
-## Mathematical Formula
+$$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 
-### Cosine Similarity
-
-\[
-\text{Cosine Similarity} = \frac{A \cdot B}{\|A\| \|B\|}
-\]
-
-**Dimana:**
-
-- \( A \) and \( B \) are the TF-IDF vectors of two products.
-- \( \|A\| \) and \( \|B\| \) are the magnitudes (norms) of the vectors.
-- \( A \cdot B \) is the dot product of the vectors.
+Dimana:  
+- $\mathbf{A}$ and $\mathbf{B}$ are the TF-IDF vectors of two products.  
+- $\|\mathbf{A}\|$ and $\|\mathbf{B}\|$ are the magnitudes (norms) of the vectors.  
+- $\mathbf{A} \cdot \mathbf{B}$ is the dot product of the vectors.  
 
 
 Model dievaluasi secara kualitatif dengan melihat relevansi hasil terhadap film input.
