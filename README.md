@@ -49,9 +49,9 @@ Dataset diambil dari:
   - `genres`: Genre film
   - `release_date`: Tanggal rilis
   - `rating`: Skor rating pengguna
-  - `description`: Sinopsis atau deskripsi film
-  - `actors`: Aktor yang membintangi
-  - `directors`: Sutradara
+  - `num_raters`: jumlah penilaian
+  - `num_reviews`: Jumlah ulasan
+  - `review_url`: Link ulasan
 
 ### 📈 Visualisasi Data
 
