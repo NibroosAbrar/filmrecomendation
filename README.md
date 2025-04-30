@@ -86,12 +86,28 @@ plt.show()
 
 ## 🧹 Data Preparation
 
-- **Text Cleaning**: Membersihkan deskripsi dari tanda baca, angka, dan kata tidak penting (stopwords).
-- **TF-IDF Vectorization**: Mengubah teks deskripsi menjadi vektor numerik.
-- **Feature Engineering**: Menggabungkan kolom genre dan nama menjadi satu fitur gabungan.
-- **Normalisasi**: Menyesuaikan format data (misal: lowercase, strip whitespace).
+Tahapan ini bertujuan untuk menyiapkan data agar optimal digunakan oleh model rekomendasi. Berikut adalah langkah-langkah preprocessing yang dilakukan:
 
-📌 Proses ini penting untuk memastikan data dalam format yang sesuai agar algoritma rekomendasi dapat berjalan secara optimal.
+### 1. Menghapus Data Duplikat
+- Menggunakan `df.drop_duplicates()` untuk menghapus entri dengan nilai duplikat pada kolom `name`, `genres`, dan `description`.
+
+### 2. Menghapus Kolom yang Tidak Relevan
+- Menghapus kolom seperti `review_url`, `release_date`, dan `run_length` menggunakan `df.drop()` karena tidak berkontribusi pada sistem rekomendasi.
+
+### 3. Encoding Kolom Genres
+- Menggunakan `OneHotEncoder` dari scikit-learn.
+- Melakukan `fit_transform` pada kolom `genres` dan menggabungkannya kembali ke DataFrame asli menggunakan `concat`.
+
+### 4. Ekstraksi Fitur Teks (TF-IDF)
+- Menggabungkan kolom `name`, `genres`, dan `description` menjadi satu kolom teks gabungan bernama `features`.
+- Menggunakan `TfidfVectorizer` untuk mengubah teks pada kolom `features` menjadi representasi numerik.
+
+### 5. Menangani Missing Values (Secara Implisit)
+- Mengonversi kolom `name`, `genres`, dan `description` menjadi string menggunakan `astype(str)` untuk menghindari error ketika memproses data yang mengandung nilai kosong.
+
+### 6. Memastikan Kolom Name sebagai String
+- Menggunakan `notnull()` dan `astype(str)` untuk memastikan bahwa kolom `name` tidak kosong dan bertipe string.
+
 
 ---
 
