@@ -126,6 +126,7 @@ Top 5 rekomendasi:
 
 ---
 
+
 ## 📏 Evaluation
 
 ### 📐 Metrik Evaluasi
@@ -138,9 +139,50 @@ Top 5 rekomendasi:
 $$\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}$$
 
 Dimana:  
-- $\mathbf{A}$ and $\mathbf{B}$ are the TF-IDF vectors of two products.  
-- $\|\mathbf{A}\|$ and $\|\mathbf{B}\|$ are the magnitudes (norms) of the vectors.  
-- $\mathbf{A} \cdot \mathbf{B}$ is the dot product of the vectors.  
+- $\mathbf{A}$ dan $\mathbf{B}$ adalah vektor TF-IDF dari dua film.  
+- $\|\mathbf{A}\|$ dan $\|\mathbf{B}\|$ adalah norma (magnitudo) dari masing-masing vektor.  
+- $\mathbf{A} \cdot \mathbf{B}$ adalah hasil dot product dari vektor tersebut.
 
+### 📊 Hasil Evaluasi
 
-Model dievaluasi secara kualitatif dengan melihat relevansi hasil terhadap film input.
+```bash
+<ipython-input-85-1bd521b417d7>:6: FutureWarning: Series.__getitem__ treating keys as positions is deprecated.
+  idx = int(idx[0]) if len(idx) > 0 else None
+Precision@10: 0.0136
+Recall@10: 0.0789
+Average Cosine Similarity Score: 0.3091
+```
+
+### 🧾 Evaluasi dan Keterkaitan dengan Business Understanding
+
+#### 1. 🎯 Apakah model menjawab problem statement?
+**Problem statement**: Bagaimana cara memberikan rekomendasi film yang relevan berdasarkan kemiripan konten seperti genre dan sinopsis?
+
+✅ Ya, model berhasil menjawab permasalahan tersebut.  
+Dengan TF-IDF dan Cosine Similarity, sistem berhasil memberikan film yang mirip secara konten berdasarkan input pengguna.
+
+#### 2. 🥅 Apakah model mencapai goals proyek?
+- Mengembangkan sistem rekomendasi berbasis konten.
+- Memberikan rekomendasi top-N film yang paling relevan.
+
+**Evaluasi menunjukkan**:
+- Precision@10: 0.0136
+- Recall@10: 0.0789
+- Cosine Similarity Score: 0.3091
+
+Meskipun precision dan recall masih rendah, sistem tetap memberikan hasil relevan secara kualitatif.
+
+#### 3. 🧠 Apakah solusi yang dirancang berdampak terhadap kebutuhan bisnis?
+✅ Ya, karena sistem:
+- Tidak membutuhkan data interaksi pengguna.
+- Cocok untuk dataset kecil-menengah.
+- Mudah dipahami dan diimplementasikan.
+
+📌 Rekomendasi:
+- Gunakan Word Embedding (Word2Vec/BERT) untuk vektorisasi yang lebih kontekstual.
+- Gabungkan dengan metode collaborative filtering jika data pengguna tersedia.
+
+### ✅ Kesimpulan Evaluasi
+
+Sistem sudah menjawab tujuan bisnis, meskipun akurasi kuantitatif masih dapat ditingkatkan. Relevansi konten tetap dapat dipertahankan, dan pendekatan content-based efektif sebagai baseline.
+
